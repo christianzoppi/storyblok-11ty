@@ -1,6 +1,6 @@
 {
   "name": "storyblok-11ty",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Import Stories and Datasources from Storyblok to 11ty as data objects or static files.",
   "main": "index.js",
   "scripts": {
