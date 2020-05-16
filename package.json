@@ -1,0 +1,22 @@
+{
+  "name": "storyblok-11ty",
+  "version": "1.0.0",
+  "description": "Import Stories and Datasources from Storyblok to 11ty as data objects or static files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Storyblok",
+    "11ty"
+  ],
+  "deprecated": false,
+  "author": {
+    "name": "Christian Zoppi",
+    "email": "me@christianzoppi.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "storyblok-js-client": "^2.5.0"
+  }
+}
