@@ -18,5 +18,12 @@
   "license": "MIT",
   "dependencies": {
     "storyblok-js-client": "^2.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christianzoppi/storyblok-11ty"
+  },
+  "bugs": {
+    "url": "https://github.com/christianzoppi/storyblok-11ty/issues"
   }
 }
