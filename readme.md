@@ -71,7 +71,7 @@ Promise. Return `false` if something went wrong in the process, otherwise `true`
 **Examples**
 
 ```javascript
-// Example of Global Data File in the _data directory
+// Storing all of the entries
 const StoryblokTo11ty = require('storyblok-11ty');
 const sb = new StoryblokTo11ty({token: 'your-space-token'});
 
@@ -79,7 +79,7 @@ sb.storeStories();
 ```
 
 ```javascript
-// Alternative example to return just the pages made with the component called news
+// Storing just the news
 const StoryblokTo11ty = require('storyblok-11ty');
 const sb = new StoryblokTo11ty({token: 'your-space-token'});
     
@@ -109,7 +109,7 @@ module.exports = async () => {
 ```
 
 ```javascript
-// Alternative example to return just the pages made with the component called news
+// Alternative example to return just the datasource called categories
 module.exports = async () => {
     const StoryblokTo11ty = require('storyblok-11ty');
     const sb = new StoryblokTo11ty({token: 'your-space-token'});
@@ -131,7 +131,7 @@ Promise. Return `false` if something went wrong in the process, otherwise `true`
 **Examples**
 
 ```javascript
-// Example of Global Data File in the _data directory
+// Store all of the datasources in a single datasources.json file
 const StoryblokTo11ty = require('storyblok-11ty');
 const sb = new StoryblokTo11ty({token: 'your-space-token'});
 
@@ -139,7 +139,7 @@ return await sb.storeDatasources();
 ```
 
 ```javascript
-// Alternative example to return just the pages made with the component called news
+// Storing the datasource called categories in categories.json
 const StoryblokTo11ty = require('storyblok-11ty');
 const sb = new StoryblokTo11ty({token: 'your-space-token'});
 
