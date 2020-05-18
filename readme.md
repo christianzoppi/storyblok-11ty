@@ -21,8 +21,14 @@ You can download the data and store it ast front matter templates or as global d
 ```javascript
 // Example of Global Data File in the _data directory
 const StoryblokTo11ty = require('storyblok-11ty');
-const sb = new StoryblokTo11ty({token: 'your-space-token'});
+const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
 ```
+
+## Stories Data Transformation
+Stories are fetched from Storyblok api and the `content` propert of objects is renamed as `data` because using just `content` won't work well with 11ty. The story object will have 3 new properties used by 11ty:
+- `layout` String. The name of the folder inside `_include` where you have stored your layouts;
+- `tags` String. The name of the component of the entry, used to support the *collections* feature of 11ty;
+- `permalink` String. The permalink of the entry. This value uses the `real path` if set, otherwise it falls back to the `full slug`.
 
 ### Method `StoryblokTo11ty#getStories`
 
@@ -41,7 +47,7 @@ Promise. The response of the promise is an array of transformed entries.
 // Example of Global Data File in the _data directory
 module.exports = async () => {
     const StoryblokTo11ty = require('storyblok-11ty');
-    const sb = new StoryblokTo11ty({token: 'your-space-token'});
+    const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
     
     return await sb.getStories();
 }
@@ -51,7 +57,7 @@ module.exports = async () => {
 // Alternative example to return just the pages made with the component called news
 module.exports = async () => {
     const StoryblokTo11ty = require('storyblok-11ty');
-    const sb = new StoryblokTo11ty({token: 'your-space-token'});
+    const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
     
     return await sb.getStories('news');
 }
@@ -73,7 +79,7 @@ Promise. Return `false` if something went wrong in the process, otherwise `true`
 ```javascript
 // Storing all of the entries
 const StoryblokTo11ty = require('storyblok-11ty');
-const sb = new StoryblokTo11ty({token: 'your-space-token'});
+const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
 
 sb.storeStories();
 ```
@@ -81,7 +87,7 @@ sb.storeStories();
 ```javascript
 // Storing just the news
 const StoryblokTo11ty = require('storyblok-11ty');
-const sb = new StoryblokTo11ty({token: 'your-space-token'});
+const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
     
 sb.storeStories('news');
 ```
@@ -102,7 +108,7 @@ Promise. The response of the promise is an object with all the datasources or an
 // Example of Global Data File in the _data directory
 module.exports = async () => {
     const StoryblokTo11ty = require('storyblok-11ty');
-    const sb = new StoryblokTo11ty({token: 'your-space-token'});
+    const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
     
     return await sb.getDatasources();
 }
@@ -112,7 +118,7 @@ module.exports = async () => {
 // Alternative example to return just the datasource called categories
 module.exports = async () => {
     const StoryblokTo11ty = require('storyblok-11ty');
-    const sb = new StoryblokTo11ty({token: 'your-space-token'});
+    const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
     
     return await sb.getDatasources('categories');
 }
@@ -133,7 +139,7 @@ Promise. Return `false` if something went wrong in the process, otherwise `true`
 ```javascript
 // Store all of the datasources in a single datasources.json file
 const StoryblokTo11ty = require('storyblok-11ty');
-const sb = new StoryblokTo11ty({token: 'your-space-token'});
+const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
 
 return await sb.storeDatasources();
 ```
@@ -141,13 +147,25 @@ return await sb.storeDatasources();
 ```javascript
 // Storing the datasource called categories in categories.json
 const StoryblokTo11ty = require('storyblok-11ty');
-const sb = new StoryblokTo11ty({token: 'your-space-token'});
+const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
 
 sb.storeDatasources('categories');
 ```
 
-## Stories Data Transformation
-Stories are fetched from Storyblok api and the story object will have 3 new properties used by 11ty:
-- `layout` String. The name of the folder inside `_include` where you have stored your layouts;
-- `tags` String. The name of the component of the entry, used to support the *collections* feature of 11ty;
-- `permalink` String. The permalink of the entry. This value uses the `real path` if set, otherwise it falls back to the `full slug`.
+## Coding Utilities
+
+### Liquid custom tag
+If you have a field of type `block` and you have several blocks inside it, you might want to output all of them using a different layout file for each block.
+In order to achieve this you can use the custom liquid tag `{% sb_blocks name_of_blocks_field %}` that will loop through all the blocks inside the field. For each block it'll include a template with the same name as the slugified component name. If your block is called `Home Banner` the tag will look for the template `home-banner.liquid` inside the `_includes/block/` folder or inside `includes/your_custom_folder/`. You can specify `your_custom_folder` passing the parameter `blocks_folder` to the Storyblok11Ty instance like in the example below.
+
+The block fields will be passed to the layout under the object `block`. If your block has a field called `heading` you can retrieve its value referencing to it as `block.heading`.
+
+
+```javascript
+const Storyblok11Ty = require("storyblok-11ty");
+const sbto11ty = new Storyblok11Ty.plugin({blocks_folder: 'components/'});
+
+module.exports = function(eleventyConfig) {
+  eleventyConfig.addPlugin(sbto11ty);
+};
+```
