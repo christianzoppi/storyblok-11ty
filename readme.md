@@ -1,8 +1,10 @@
 # Import data from Storyblok to 11ty
 
-Import Stories and Datasources from [Storyblok](https://www.storyblok.com/) and use them with [11ty](https://www.11ty.dev/) for your static website.
+Import Stories and Datasources from [Storyblok](https://www.storyblok.com/) and use them with [11ty](https://www.11ty.dev/) for your static website. 
 
 You can download the data and store it ast front matter templates or as global data objects.
+
+This package will work also as 11ty plugin to add a custom tag for liquid to make it easier to render Storyblok blocks. I'm working also to add such a feature to Javascript templates and to EJS.
 
 ## Importer
 
