@@ -164,6 +164,8 @@ class StoryblokTo11ty {
     transformStories(story) {
         // Setting the path
         story.layout = `${this.layouts_path.replace(/^\/|\/$/g, '')}/`;
+        // Setting the collection
+        story.tags = story.content.component;
         // Adding template name
         story.layout += this.components_layouts_map[story.content.component] || story.content.component;
         // Creating the permalink using the story path override field (real path in Storyblok) 

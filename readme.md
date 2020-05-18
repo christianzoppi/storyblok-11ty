@@ -147,6 +147,7 @@ sb.storeDatasources('categories');
 ```
 
 ## Stories Data Transformation
-Stories are fetched from Storyblok api and the story object will have 2 new properties used by 11ty:
+Stories are fetched from Storyblok api and the story object will have 3 new properties used by 11ty:
 - `layout` String. The name of the folder inside `_include` where you have stored your layouts;
+- `tags` String. The name of the component of the entry, used to support the *collections* feature of 11ty;
 - `permalink` String. The permalink of the entry. This value uses the `real path` if set, otherwise it falls back to the `full slug`.
