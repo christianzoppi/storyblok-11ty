@@ -4,9 +4,9 @@ Import Stories and Datasources from [Storyblok](https://www.storyblok.com/) and 
 
 You can download the data and store it ast front matter templates or as global data objects.
 
-## Usage
+## Importer
 
-### Class `StoryblokTo11ty`
+### Class `StoryblokTo11ty.importer`
 
 **Parameters**
 
@@ -18,13 +18,7 @@ You can download the data and store it ast front matter templates or as global d
   - `[datasources_path]` String, optional, defaults to `_data`. It's the folder where the global data files are stored
   - `[components_layout]` Object, optional, defaults to empty object. An object with parameter -> value to match specific component to specific layouts. For example `{root: 'layouts/root.ejs', news: 'layouts/news_entry.ejs'}`. The script will use the name of the component as default layout for each entry. An entry made with the `root` component will have by default `layouts/root`.
 
-```javascript
-// Example of Global Data File in the _data directory
-const StoryblokTo11ty = require('storyblok-11ty');
-const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
-```
-
-## Stories Data Transformation
+### Stories Data Transformation
 Stories are fetched from Storyblok api and the `content` propert of objects is renamed as `data` because using just `content` won't work well with 11ty. The story object will have 3 new properties used by 11ty:
 - `layout` String. The name of the folder inside `_include` where you have stored your layouts;
 - `tags` String. The name of the component of the entry, used to support the *collections* feature of 11ty;
@@ -152,7 +146,20 @@ const sb = new StoryblokTo11ty.importer({token: 'your-space-token'});
 sb.storeDatasources('categories');
 ```
 
-## Coding Utilities
+## 11ty Plugin
+
+### Class `StoryblokTo11ty.plugin`
+
+**Parameters**
+
+- `config` Object
+  - `blocks_folder` String, The folder of the blocks layouts.
+
+```javascript
+// Example of Global Data File in the _data directory
+const StoryblokTo11ty = require('storyblok-11ty');
+const sb = new StoryblokTo11ty.plugin({blocks_folder: 'components/'});
+```
 
 ### Liquid custom tag
 If you have a field of type `block` and you have several blocks inside it, you might want to output all of them using a different layout file for each block.
