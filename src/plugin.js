@@ -24,7 +24,9 @@ class StoryblokTo11tyPlugin {
      * Install the plugin into 11ty config
      */
     configFunction(config) {
-        // LIQUID TAG FOR BLOCKS LOOPING
+        /**
+         * LIQUID TAG FOR BLOCK LOOPING
+         */
         config.addLiquidTag("sb_blocks", (liquidEngine) => {
             return {
                 parse: (tagToken, remainingTokens) => {
@@ -53,6 +55,45 @@ class StoryblokTo11tyPlugin {
                     return Promise.resolve(html_output);
                 }
             };
+        });
+
+        /**
+         * NUNJUKS TAG FOR BLOCK LOOPING
+         */
+        config.addNunjucksTag("sb_blocks", (nunjucksEngine) => {
+            var self = this;
+
+            return new function() {
+                this.tags = ["sb_blocks"];
+        
+                this.parse = function(parser, nodes, lexer) {
+                    var tok = parser.nextToken();
+            
+                    var args = parser.parseSignature(null, true);
+                    parser.advanceAfterBlockEnd(tok.value);
+            
+                    return new nodes.CallExtensionAsync(this, "run", args);
+                };
+            
+                this.run = async function(context, blocks, callback) {
+                    // Converting single object to array
+                    if(blocks && typeof blocks === 'object' && !Array.isArray(blocks)) {
+                        blocks = [blocks];
+                    }
+                    // Checking if blocks object is not set or is not an array
+                    if(!blocks || !Array.isArray(blocks)) {
+                        return '';
+                    }
+                    // Parsing each single block
+                    var html_output = '';
+                    await Promise.all(blocks.map(async (block) => {
+                        block.component = utils.slugify(block.component);
+                        let html = nunjucksEngine.render(`${self.blocks_folder + block.component}.njk`, {block: block})
+                        html_output += html;
+                    }));
+                    return callback(null, html_output);
+                };
+            }();
         });
     }
 }
