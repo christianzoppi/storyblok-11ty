@@ -1,6 +1,6 @@
 {
   "name": "storyblok-11ty",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Import Stories and Datasources from Storyblok to 11ty as data objects or static files and it adds custom tags for blocks parsing.",
   "main": "index.js",
   "scripts": {
