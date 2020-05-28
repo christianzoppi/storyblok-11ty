@@ -15,10 +15,11 @@ This package will work also as [Eleventy plugin](#eleventy-plugin) to add a cust
 - `config` Object
   - `token` String, The preview token you can find in your space dashboard at https://app.storyblok.com
   - `[version]` String, optional, defaults to `draft`. It's the Storyblok content version. It can be `published` or `draft`
-  - `[layout_path]` String, optional, defaults to empty string. It's the main path of your layouts in 11ty
+  - `[layouts_path]` String, optional, defaults to empty string. It's the main path of your layouts in 11ty
   - `[stories_path]` String, optional, defaults to `storyblok`. It's the folder where the front matter files are stored
   - `[datasources_path]` String, optional, defaults to `_data`. It's the folder where the global data files are stored
-  - `[components_layout]` Object, optional, defaults to empty object. An object with parameter -> value to match specific component to specific layouts. For example `{root: 'layouts/root.ejs', news: 'layouts/news_entry.ejs'}`. The script will use the name of the component as default layout for each entry. An entry made with the `root` component will have by default `layouts/root`.
+  - `[components_layout]` Object, optional, defaults to empty object. An object with parameter -> value to match specific component to specific layouts. For example `{root: 'layouts/root.ejs', news: 'layouts/news_entry.ejs'}`. The script will use the name of the component as default layout for each entry. An entry made with the `root` component will have by default `layouts/root`;
+  - `[storyblok_client_config]` Object, optional, defaults to empty object. You can pass a custom object of settings for the [config parameter](https://github.com/storyblok/storyblok-js-client#class-storyblok) of the Storyblok JS Client.
 
 ### Stories Data Transformation
 Stories are fetched from Storyblok api and the `content` propert of objects is renamed as `data` because using just `content` won't work well with 11ty. The story object will have 3 new properties used by 11ty:

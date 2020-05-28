@@ -16,26 +16,32 @@ class StoryblokTo11tyData {
      * @param {string} [params.stories_path=./storyblok/] The path where to store the entries.
      * @param {string} [params.stories_path=./_data/] The path where to store the datasources.
      * @param {string} [params.components_layouts_map] An object with parameter -> value to match specific component to specific layouts.
+     * @param {object} [params.storyblok_client_config] The config for the Storyblok JS client.
      */
     constructor(params = {}) {
-        this.api_version            = params.version || 'draft';
-        this.storyblok_api_token    = params.token;
-        this.stories_path           = this.cleanPath(params.stories_path || 'storyblok');
-        this.datasources_path       = this.cleanPath(params.datasources_path || '_data');
-        this.layouts_path           = params.layouts_path || '';
-        this.components_layouts_map = params.components_layouts_map || {};
-        this.per_page               = 100;
-        this.stories                = [];
+        this.api_version                = params.version || 'draft';
+        this.storyblok_api_token        = params.token;
+        this.stories_path               = this.cleanPath(params.stories_path || 'storyblok');
+        this.datasources_path           = this.cleanPath(params.datasources_path || '_data');
+        this.layouts_path               = params.layouts_path || '';
+        this.components_layouts_map     = params.components_layouts_map || {};
+        this.per_page                   = 100;
+        this.stories                    = [];
+        this.storyblok_client_config    = params.storyblok_client_config || {};
 
         // Init the Storyblok client
-        if(this.storyblok_api_token) {
-            this.client = new StoryblokClient({
-                accessToken: this.storyblok_api_token,
-                cache: {
-                clear: 'auto',
-                type: 'memory'
+        if(this.storyblok_api_token || (this.storyblok_client_config && this.storyblok_client_config.accessToken)) {
+            if(!this.storyblok_client_config.accessToken) {
+                this.storyblok_client_config.accessToken = this.storyblok_api_token;
+            }
+            // Setting up cache settings if not specified
+            if(!this.storyblok_client_config.hasOwnProperty('cache')) {
+                this.storyblok_client_config.cache = {
+                    clear: 'auto',
+                    type: 'memory'
                 }
-            });
+            }
+            this.client = new StoryblokClient(this.storyblok_client_config);
         }
     }
 
