@@ -1,5 +1,5 @@
 // Node Modules
-const StoryblokTo11tyPlugin = require('./src/plugin');
+const StoryblokTo11tyPlugin = require('./src/plugin/index');
 const StoryblokTo11tyData = require('./src/data');
 
 /**
