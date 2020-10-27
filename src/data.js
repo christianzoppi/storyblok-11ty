@@ -200,6 +200,10 @@ class StoryblokTo11tyData {
         if(params && params.component) {
             request_options.query['filter_query[component][in]'] = params.component;
         }
+        // Whether to resolve relations
+        if(params && params.resolve_relations) {
+            request_options.query['resolve_relations'] = params.resolve_relations;
+        }
         // Getting the data
         let pages = await this.getData('stories', 'stories', request_options);
         if(!pages.data || pages.error) {
