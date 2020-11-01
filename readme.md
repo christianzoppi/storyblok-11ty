@@ -34,6 +34,7 @@ With this method you can get all the stories from your space as an array of obje
 **Parameters**
 - `[options]` Object, optional.
  - [options.component] String, optional. Set this parameter with the name of a component to get just the entries made with it
+ - [options.resolve_relations] String, optional. Resolve multiple levels of content by specifying comma-separated values of `component.field_name` according to your data model.
 
 **Return**
 Promise. The response of the promise is an array of transformed entries. 
